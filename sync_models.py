@@ -182,6 +182,21 @@ def main():
     or_latency = order_by_ids(or_models, latency_ids)
     or_throughput = order_by_ids(or_models, throughput_ids)
     or_intelligence = order_by_ids(or_models, intelligence_ids)
+
+    # Balanced is a simple composite ranking: 60% provider intelligence rank,
+    # 40% provider throughput rank. Ranks are normalized so missing benchmark
+    # data naturally places a model later without inventing a numeric score.
+    intelligence_rank = {model_id: i for i, model_id in enumerate(intelligence_ids)}
+    throughput_rank = {model_id: i for i, model_id in enumerate(throughput_ids)}
+    def balanced_score(model):
+        model_id = model["id"]
+        intelligence_position = intelligence_rank.get(model_id, len(intelligence_ids))
+        throughput_position = throughput_rank.get(model_id, len(throughput_ids))
+        intelligence_norm = intelligence_position / max(len(intelligence_ids), 1)
+        throughput_norm = throughput_position / max(len(throughput_ids), 1)
+        return (0.6 * intelligence_norm) + (0.4 * throughput_norm), model_id
+
+    or_balanced = sorted(or_models, key=balanced_score)
     or_reasoning_models = [m for m in or_models if m["id"] in set(reasoning_ids)]
     or_reasoning = order_by_ids(or_reasoning_models, reasoning_ids) if or_reasoning_models else or_intelligence
 
@@ -208,6 +223,7 @@ def main():
     or_latency_entries = [make_openrouter_entry(m) for m in or_latency]
     or_throughput_entries = [make_openrouter_entry(m) for m in or_throughput]
     or_intelligence_entries = [make_openrouter_entry(m) for m in or_intelligence]
+    or_balanced_entries = [make_openrouter_entry(m) for m in or_balanced]
     or_reasoning_entries = [make_openrouter_entry(m) for m in or_reasoning]
     groq_entries = [make_groq_entry(m) for m in groq_models]
     gemini_entries = [GEMINI_MODEL]
@@ -216,7 +232,7 @@ def main():
     # are rebuilt from current provider metadata on every script run.
     category_candidates = {
         "AUTO - Fast": dedupe(or_latency_entries + groq_entries + gemini_entries),
-        "AUTO - Balanced": dedupe(or_intelligence_entries + or_throughput_entries + groq_entries + gemini_entries),
+        "AUTO - Balanced": dedupe(or_balanced_entries + groq_entries + gemini_entries),
         "AUTO - Reasoning": dedupe(or_reasoning_entries + or_intelligence_entries + groq_entries + gemini_entries),
     }
 
