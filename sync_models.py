@@ -119,11 +119,6 @@ def dedupe(entries):
             seen.add(provider_model)
     return result
 
-
-# Keep individual models visible and directly callable.
-for model in models:
-    model.setdefault("model_info", {})["discoverable"] = True
-
 def order_by_ids(models, ordered_ids):
     by_id = {m["id"]: m for m in models}
     result, seen = [], set()
