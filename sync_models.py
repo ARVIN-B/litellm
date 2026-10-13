@@ -323,9 +323,9 @@ def main():
     print("=" * 52)
 
     if models_changed or router_changed:
-        print("Generated configuration changed; restarting LiteLLM...")
+        print("Generated configuration changed; recreating LiteLLM to apply config and mounts...")
         subprocess.run(
-            ["docker", "compose", "-f", str(COMPOSE_FILE), "restart", "litellm"],
+            ["docker", "compose", "-f", str(COMPOSE_FILE), "up", "-d", "--force-recreate", "litellm"],
             cwd=BASE_DIR,
             check=True,
         )
