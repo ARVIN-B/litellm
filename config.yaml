@@ -1,0 +1,26 @@
+model_list:
+  - model_name: hoosh-masnooi
+    litellm_params:
+      model: openrouter/openrouter/free
+      api_key: os.environ/ARVIN_OPENROUTER_API_KEY
+
+include:
+  - /app/generated_models.yaml
+
+litellm_settings:
+  drop_params: true
+
+router_settings:
+  fallbacks:
+    - hoosh-masnooi:
+        - groq-openai-gpt-oss-120b
+        - groq-qwen-qwen3.8-27b
+        - groq-openai-gpt-oss-20b
+        - or-inclusionai-ling-3.1-flash
+        - or-google-gemma-4-31b-it:free
+  num_retries: 1
+  allowed_fails: 1
+  cooldown_time: 60
+
+general_settings:
+  master_key: os.environ/LITELLM_MASTER_KEY

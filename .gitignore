@@ -1,0 +1,139 @@
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Python packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+
+# =========================
+# Environment & Secrets
+# =========================
+.env
+.env.*
+!.env.example
+
+# =========================
+# IDE / Editors
+# =========================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# =========================
+# OS
+# =========================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# =========================
+# Testing / Coverage
+# =========================
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+
+# =========================
+# Type checking / Linters
+# =========================
+.mypy_cache/
+.pyright/
+.ruff_cache/
+
+# =========================
+# Jupyter
+# =========================
+.ipynb_checkpoints/
+
+# =========================
+# Logs
+# =========================
+*.log
+logs/
+
+# =========================
+# AI / ML
+# =========================
+# Model files
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.onnx
+*.bin
+
+# Local datasets
+data/
+datasets/
+models/
+checkpoints/
+
+# Vector databases / embeddings
+chroma/
+chroma_db/
+vectorstore/
+vector_store/
+.faiss/
+
+# =========================
+# Application data
+# =========================
+tmp/
+temp/
+cache/
+.cache/
+
+# SQLite databases
+*.sqlite3
+*.sqlite
+
+# =========================
+# Docker
+# =========================
+docker-compose.override.yml
+
+# =========================
+# Secrets / Credentials
+# =========================
+*.pem
+*.key
+*.crt
+credentials.json
+service-account.json
+secrets.json
+
+# Telegram / Social Media session files
+*.session
+*.session-journal
+
+# =========================
+# Local configuration
+# =========================
+config.local.*
+settings.local.*
+
+# =========================
+# Generated files
+# =========================
+uploads/
+media/
+staticfiles/
