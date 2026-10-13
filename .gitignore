@@ -137,3 +137,8 @@ settings.local.*
 uploads/
 media/
 staticfiles/
+
+# =========================
+# backup files
+# =========================
+*.backup-20261012
