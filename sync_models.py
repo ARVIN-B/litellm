@@ -273,21 +273,6 @@ def main():
             print(f"WARNING: {category} has no fallback candidate.")
         fallbacks.append({category: names})
 
-    # Keep the existing hoosh-masnooi model name while generating its fallback
-    # chain dynamically from the currently available models.
-    hoosh_candidates = dedupe(
-        category_candidates["AUTO - Balanced"]
-        + category_candidates["AUTO - Fast"]
-        + category_candidates["AUTO - Reasoning"]
-    )
-    hoosh_fallbacks, seen = [], set()
-    for candidate in hoosh_candidates:
-        name = alias_by_provider_model.get(candidate["litellm_params"]["model"])
-        if name and name not in seen:
-            hoosh_fallbacks.append(name)
-            seen.add(name)
-    fallbacks.insert(0, {"hoosh-masnooi": hoosh_fallbacks})
-
     model_yaml = yaml.safe_dump(
         {"model_list": generated_models}, sort_keys=False, allow_unicode=True
     )

@@ -1,8 +1,5 @@
 model_list:
-  - model_name: hoosh-masnooi
-    litellm_params:
-      model: openrouter/openrouter/free
-      api_key: os.environ/ARVIN_OPENROUTER_API_KEY
+  - model_name: []
 
 include:
   - /app/generated_models.yaml

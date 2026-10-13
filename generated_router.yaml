@@ -37,11 +37,11 @@ router_settings:
     - or-google-gemma-4-26b-a4b-it:free
     - or-poolside-laguna-s-2.1:free
     - or-apodex-apodex-1.1-mini:free
+    - or-google-lyria-3-pro-preview
     - or-thinkingmachines-inkling:free
     - or-nvidia-nemotron-3-ultra-550b-a55b:free
     - or-google-lyria-3-clip-preview
     - or-inclusionai-ling-3.1-flash
-    - or-google-lyria-3-pro-preview
     - or-dots-studio-dots-3-note-preview:free
     - or-openrouter-free
     - groq-qwen-qwen3.8-27b

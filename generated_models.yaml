@@ -71,6 +71,12 @@ model_list:
     api_key: os.environ/ARVIN_OPENROUTER_API_KEY
   model_info:
     discoverable: true
+- model_name: or-google-lyria-3-pro-preview
+  litellm_params:
+    model: openrouter/google/lyria-3-pro-preview
+    api_key: os.environ/ARVIN_OPENROUTER_API_KEY
+  model_info:
+    discoverable: true
 - model_name: or-thinkingmachines-inkling:free
   litellm_params:
     model: openrouter/thinkingmachines/inkling:free
@@ -92,12 +98,6 @@ model_list:
 - model_name: or-inclusionai-ling-3.1-flash
   litellm_params:
     model: openrouter/inclusionai/ling-3.1-flash
-    api_key: os.environ/ARVIN_OPENROUTER_API_KEY
-  model_info:
-    discoverable: true
-- model_name: or-google-lyria-3-pro-preview
-  litellm_params:
-    model: openrouter/google/lyria-3-pro-preview
     api_key: os.environ/ARVIN_OPENROUTER_API_KEY
   model_info:
     discoverable: true
