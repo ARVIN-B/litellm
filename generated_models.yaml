@@ -35,6 +35,12 @@ model_list:
     api_key: os.environ/ARVIN_OPENROUTER_API_KEY
   model_info:
     discoverable: true
+- model_name: or-google-lyria-3-pro-preview
+  litellm_params:
+    model: openrouter/google/lyria-3-pro-preview
+    api_key: os.environ/ARVIN_OPENROUTER_API_KEY
+  model_info:
+    discoverable: true
 - model_name: or-poolside-laguna-xs-2.1:free
   litellm_params:
     model: openrouter/poolside/laguna-xs-2.1:free
@@ -47,15 +53,15 @@ model_list:
     api_key: os.environ/ARVIN_OPENROUTER_API_KEY
   model_info:
     discoverable: true
-- model_name: or-thinkingmachines-inkling-small:free
-  litellm_params:
-    model: openrouter/thinkingmachines/inkling-small:free
-    api_key: os.environ/ARVIN_OPENROUTER_API_KEY
-  model_info:
-    discoverable: true
 - model_name: or-google-gemma-4-26b-a4b-it:free
   litellm_params:
     model: openrouter/google/gemma-4-26b-a4b-it:free
+    api_key: os.environ/ARVIN_OPENROUTER_API_KEY
+  model_info:
+    discoverable: true
+- model_name: or-thinkingmachines-inkling-small:free
+  litellm_params:
+    model: openrouter/thinkingmachines/inkling-small:free
     api_key: os.environ/ARVIN_OPENROUTER_API_KEY
   model_info:
     discoverable: true
@@ -71,9 +77,9 @@ model_list:
     api_key: os.environ/ARVIN_OPENROUTER_API_KEY
   model_info:
     discoverable: true
-- model_name: or-google-lyria-3-pro-preview
+- model_name: or-nvidia-nemotron-3-ultra-550b-a55b:free
   litellm_params:
-    model: openrouter/google/lyria-3-pro-preview
+    model: openrouter/nvidia/nemotron-3-ultra-550b-a55b:free
     api_key: os.environ/ARVIN_OPENROUTER_API_KEY
   model_info:
     discoverable: true
@@ -83,21 +89,15 @@ model_list:
     api_key: os.environ/ARVIN_OPENROUTER_API_KEY
   model_info:
     discoverable: true
-- model_name: or-nvidia-nemotron-3-ultra-550b-a55b:free
+- model_name: or-inclusionai-ling-3.1-flash
   litellm_params:
-    model: openrouter/nvidia/nemotron-3-ultra-550b-a55b:free
+    model: openrouter/inclusionai/ling-3.1-flash
     api_key: os.environ/ARVIN_OPENROUTER_API_KEY
   model_info:
     discoverable: true
 - model_name: or-google-lyria-3-clip-preview
   litellm_params:
     model: openrouter/google/lyria-3-clip-preview
-    api_key: os.environ/ARVIN_OPENROUTER_API_KEY
-  model_info:
-    discoverable: true
-- model_name: or-inclusionai-ling-3.1-flash
-  litellm_params:
-    model: openrouter/inclusionai/ling-3.1-flash
     api_key: os.environ/ARVIN_OPENROUTER_API_KEY
   model_info:
     discoverable: true
