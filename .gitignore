@@ -141,6 +141,7 @@ staticfiles/
 # =========================
 # backup files
 # =========================
+backups/
 *.backup
 *.backup-*
 *.bak

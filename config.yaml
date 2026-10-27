@@ -6,6 +6,7 @@ include:
 
 litellm_settings:
   drop_params: true
+  callbacks: custom_callbacks.proxy_handler_instance
 
 general_settings:
   master_key: os.environ/LITELLM_MASTER_KEY

@@ -230,9 +230,9 @@ def main():
     # AUTO aliases remain stable; their primary deployment and fallback chain
     # are rebuilt from current provider metadata on every script run.
     category_candidates = {
-        "AUTO - Fast": dedupe(or_latency_entries + groq_entries + gemini_entries),
-        "AUTO - Balanced": dedupe(or_balanced_entries + groq_entries + gemini_entries),
-        "AUTO - Reasoning": dedupe(or_reasoning_entries + or_intelligence_entries + groq_entries + gemini_entries),
+        "AUTO-Fast": dedupe(or_latency_entries + groq_entries + gemini_entries),
+        "AUTO-Balanced": dedupe(or_balanced_entries + groq_entries + gemini_entries),
+        "AUTO-Reasoning": dedupe(or_reasoning_entries + or_intelligence_entries + groq_entries + gemini_entries),
     }
 
     raw_entries = (
