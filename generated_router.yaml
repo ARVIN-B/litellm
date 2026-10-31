@@ -1,50 +1,48 @@
 router_settings:
   fallbacks:
   - AUTO-Fast:
-    - or-nvidia-nemotron-3-nano-omni-30b-a3b-reasoning:free
-    - or-nvidia-nemotron-3.5-content-safety:free
+    - or-xingchen-agi-xing4.0-29b-a4b:free
     - or-nvidia-nemotron-3.5-lightning:free
     - or-cohere-north-mini-code:free
+    - or-nvidia-nemotron-3-nano-omni-30b-a3b-reasoning:free
     - or-poolside-laguna-xs-2.1:free
-    - or-recursive-flint-v1.0:free
     - or-google-gemma-4-26b-a4b-it:free
     - or-dots-studio-dots-3-note-preview:free
-    - or-thinkingmachines-inkling-small:free
-    - or-nvidia-nemotron-3-ultra-550b-a55b:free
     - or-nvidia-nemotron-3.5-super-vl:free
-    - or-xingchen-agi-xing4.0-29b-a4b:free
-    - or-poolside-laguna-s-2.1:free
     - or-google-gemma-4-31b-it:free
-    - or-thinkingmachines-inkling:free
+    - or-thinkingmachines-inkling-small:free
+    - or-poolside-laguna-s-2.1:free
+    - or-nvidia-nemotron-3-ultra-550b-a55b:free
     - or-google-lyria-3-clip-preview
+    - or-thinkingmachines-inkling:free
     - or-google-lyria-3-pro-preview
-    - or-nvidia-nemotron-3-super-120b-a12b:free
+    - or-nvidia-nemotron-3.5-content-safety:free
     - or-openrouter-free
+    - or-recursive-flint-v1.0:free
     - groq-qwen-qwen3.8-27b
     - groq-openai-gpt-oss-20b
     - groq-openai-gpt-oss-120b
     - groq-allam-2-7b
     - gemini-2.5-flash
   - AUTO-Balanced:
-    - or-nvidia-nemotron-3.5-super-vl:free
-    - or-liquid-lfm-2.5-2.6b:free
-    - or-thinkingmachines-inkling:free
-    - or-nvidia-nemotron-3-ultra-550b-a55b:free
+    - or-thinkingmachines-inkling-small:free
     - or-nvidia-nemotron-3.5-lightning:free
-    - or-google-gemma-4-26b-a4b-it:free
+    - or-liquid-lfm-2.5-2.6b:free
     - or-cohere-north-mini-code:free
-    - or-google-gemma-4-31b-it:free
-    - or-nvidia-nemotron-3-nano-omni-30b-a3b-reasoning:free
+    - or-nvidia-nemotron-3-ultra-550b-a55b:free
     - or-dots-studio-dots-3-note-preview:free
-    - or-nvidia-nemotron-3-super-120b-a12b:free
-    - or-recursive-flint-v1.0:free
-    - or-nvidia-nemotron-3.5-content-safety:free
-    - or-poolside-laguna-xs-2.1:free
+    - or-thinkingmachines-inkling:free
+    - or-nvidia-nemotron-3-nano-omni-30b-a3b-reasoning:free
+    - or-google-gemma-4-26b-a4b-it:free
+    - or-google-gemma-4-31b-it:free
     - or-google-lyria-3-pro-preview
     - or-google-lyria-3-clip-preview
+    - or-poolside-laguna-xs-2.1:free
+    - or-nvidia-nemotron-3.5-content-safety:free
     - or-poolside-laguna-s-2.1:free
     - or-xingchen-agi-xing4.0-29b-a4b:free
     - or-openrouter-free
+    - or-recursive-flint-v1.0:free
     - groq-qwen-qwen3.8-27b
     - groq-openai-gpt-oss-20b
     - groq-openai-gpt-oss-120b
@@ -54,14 +52,13 @@ router_settings:
     - or-thinkingmachines-inkling-small:free
     - or-thinkingmachines-inkling:free
     - or-nvidia-nemotron-3-ultra-550b-a55b:free
+    - or-nvidia-nemotron-3.5-lightning:free
+    - or-cohere-north-mini-code:free
+    - or-dots-studio-dots-3-note-preview:free
     - or-google-gemma-4-26b-a4b-it:free
     - or-google-gemma-4-31b-it:free
-    - or-nvidia-nemotron-3.5-lightning:free
-    - or-nvidia-nemotron-3-super-120b-a12b:free
-    - or-nvidia-nemotron-3-nano-omni-30b-a3b-reasoning:free
-    - or-cohere-north-mini-code:free
     - or-liquid-lfm-2.5-2.6b:free
-    - or-dots-studio-dots-3-note-preview:free
+    - or-nvidia-nemotron-3-nano-omni-30b-a3b-reasoning:free
     - or-nvidia-nemotron-3.5-content-safety:free
     - or-poolside-laguna-s-2.1:free
     - or-poolside-laguna-xs-2.1:free
