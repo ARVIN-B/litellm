@@ -24,6 +24,14 @@ GROQ_NON_CHAT_PATTERNS = (
     "transcription", "embedding", "tts",
 )
 
+GROQ_REASONING_MODELS = {
+    "openai/gpt-oss-120b",
+    "openai/gpt-oss-20b",
+    "qwen/qwen3.8-27b",
+    # "openai/gpt-oss-20b",
+    # "openai/gpt-oss-120b",
+}
+
 GEMINI_MODEL = {
     "model_name": "gemini-2.5-flash",
     "litellm_params": {
@@ -65,6 +73,7 @@ def is_free_text_chat(model):
     return (
         "text" in (architecture.get("input_modalities") or [])
         and "text" in (architecture.get("output_modalities") or [])
+        # and "text->text" in (architecture.get("modality") or [])
     )
 
 
@@ -98,15 +107,27 @@ def make_openrouter_entry(model):
     }
 
 
-def make_groq_entry(model):
+def make_groq_entry(model, category=None, reasoning_effort=None):
     model_id = model["id"]
+    model_name = alias_for("groq", model_id)
+    params = {
+        "model": "groq/" + model_id,
+        "api_key": "os.environ/ARVIN_GROQ_API_KEY",
+    }
+
+    if reasoning_effort and model_id in GROQ_REASONING_MODELS:
+        params["reasoning_effort"] = reasoning_effort
+
+    if category:
+        model_name += "-" + category.lower()
+
     return {
-        "model_name": alias_for("groq", model_id),
-        "litellm_params": {
-            "model": "groq/" + model_id,
-            "api_key": "os.environ/ARVIN_GROQ_API_KEY",
+        "model_name": model_name,
+        "litellm_params": params,
+        # "model_info": {"discoverable": True},
+        "model_info": {
+            "discoverable": not bool(category)
         },
-        "model_info": {"discoverable": True},
     }
 
 
@@ -225,21 +246,63 @@ def main():
     or_balanced_entries = [make_openrouter_entry(m) for m in or_balanced]
     or_reasoning_entries = [make_openrouter_entry(m) for m in or_reasoning]
     groq_entries = [make_groq_entry(m) for m in groq_models]
+
+    groq_reasoning_models = [
+        m for m in groq_models
+        if m["id"] in GROQ_REASONING_MODELS
+    ]
+
+    def groq_model_size(model):
+        match = re.search(r"(\d+(?:\.\d+)?)b", model["id"].lower())
+        return float(match.group(1)) if match else 0
+
+    # Fast: کوچک‌ترین مدل اول
+    groq_fast_models = sorted(
+        groq_reasoning_models,
+        key=groq_model_size
+    )
+
+    # Balanced و Reasoning: بزرگ‌ترین مدل اول
+    groq_large_first_models = sorted(
+        groq_reasoning_models,
+        key=groq_model_size,
+        reverse=True
+    )
+
+    groq_fast_entries = [
+        make_groq_entry(m, "fast", "low")
+        for m in groq_fast_models
+    ]
+
+    groq_balanced_entries = [
+        make_groq_entry(m, "balanced", "medium")
+        for m in groq_large_first_models
+    ]
+
+    groq_reasoning_entries = [
+        make_groq_entry(m, "reasoning", "high")
+        for m in groq_large_first_models
+    ]
+
     gemini_entries = [GEMINI_MODEL]
 
     # AUTO aliases remain stable; their primary deployment and fallback chain
     # are rebuilt from current provider metadata on every script run.
     category_candidates = {
-        "AUTO-Fast": dedupe(or_latency_entries + groq_entries + gemini_entries),
-        "AUTO-Balanced": dedupe(or_balanced_entries + groq_entries + gemini_entries),
-        "AUTO-Reasoning": dedupe(or_reasoning_entries + or_intelligence_entries + groq_entries + gemini_entries),
+        "AUTO-Fast": dedupe(groq_fast_entries + or_latency_entries + gemini_entries),
+        "AUTO-Balanced": dedupe(groq_balanced_entries + or_balanced_entries + gemini_entries),
+        "AUTO-Reasoning": dedupe(groq_reasoning_entries + or_reasoning_entries + or_intelligence_entries + gemini_entries),
     }
 
     raw_entries = (
         [make_openrouter_entry(m) for m in or_models]
         + groq_entries
+        + groq_fast_entries
+        + groq_balanced_entries
+        + groq_reasoning_entries
         + gemini_entries
     )
+
     aliases = [e["model_name"] for e in raw_entries]
     if len(aliases) != len(set(aliases)):
         raise RuntimeError("Generated aliases collided; refusing to replace existing configuration.")
@@ -255,22 +318,18 @@ def main():
         })
 
     generated_models = raw_entries + auto_entries
-    alias_by_provider_model = {
-        e["litellm_params"]["model"]: e["model_name"] for e in raw_entries
-    }
 
     fallbacks = []
+
     for category, candidates in category_candidates.items():
-        primary_model = candidates[0]["litellm_params"]["model"]
-        names, seen = [], set()
-        for candidate in candidates[1:]:
-            provider_model = candidate["litellm_params"]["model"]
-            name = alias_by_provider_model.get(provider_model)
-            if name and provider_model != primary_model and name not in seen:
-                names.append(name)
-                seen.add(name)
+        names = [
+            candidate["model_name"]
+            for candidate in candidates[1:]
+        ]
+
         if not names:
             print(f"WARNING: {category} has no fallback candidate.")
+
         fallbacks.append({category: names})
 
     model_yaml = yaml.safe_dump(
