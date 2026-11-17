@@ -1,22 +1,4 @@
 model_list:
-- model_name: or-liquid-lfm-3-1.7b:free
-  litellm_params:
-    model: openrouter/liquid/lfm-3-1.7b:free
-    api_key: os.environ/ARVIN_OPENROUTER_API_KEY
-  model_info:
-    discoverable: true
-- model_name: or-liquid-lfm-2.5-2.6b:free
-  litellm_params:
-    model: openrouter/liquid/lfm-2.5-2.6b:free
-    api_key: os.environ/ARVIN_OPENROUTER_API_KEY
-  model_info:
-    discoverable: true
-- model_name: or-cohere-north-mini-code:free
-  litellm_params:
-    model: openrouter/cohere/north-mini-code:free
-    api_key: os.environ/ARVIN_OPENROUTER_API_KEY
-  model_info:
-    discoverable: true
 - model_name: or-nvidia-nemotron-3.5-lightning:free
   litellm_params:
     model: openrouter/nvidia/nemotron-3.5-lightning:free
@@ -29,21 +11,15 @@ model_list:
     api_key: os.environ/ARVIN_OPENROUTER_API_KEY
   model_info:
     discoverable: true
-- model_name: or-google-gemma-4-26b-a4b-it:free
+- model_name: or-cohere-north-mini-code:free
   litellm_params:
-    model: openrouter/google/gemma-4-26b-a4b-it:free
+    model: openrouter/cohere/north-mini-code:free
     api_key: os.environ/ARVIN_OPENROUTER_API_KEY
   model_info:
     discoverable: true
-- model_name: or-dots-studio-dots-3-note-preview:free
+- model_name: or-liquid-lfm-3-1.7b:free
   litellm_params:
-    model: openrouter/dots-studio/dots-3-note-preview:free
-    api_key: os.environ/ARVIN_OPENROUTER_API_KEY
-  model_info:
-    discoverable: true
-- model_name: or-google-gemma-4-31b-it:free
-  litellm_params:
-    model: openrouter/google/gemma-4-31b-it:free
+    model: openrouter/liquid/lfm-3-1.7b:free
     api_key: os.environ/ARVIN_OPENROUTER_API_KEY
   model_info:
     discoverable: true
@@ -53,15 +29,21 @@ model_list:
     api_key: os.environ/ARVIN_OPENROUTER_API_KEY
   model_info:
     discoverable: true
-- model_name: or-xingchen-agi-xing4.0-29b-a4b:free
+- model_name: or-particle-ai-particle-1:free
   litellm_params:
-    model: openrouter/xingchen-agi/xing4.0-29b-a4b:free
+    model: openrouter/particle-ai/particle-1:free
     api_key: os.environ/ARVIN_OPENROUTER_API_KEY
   model_info:
     discoverable: true
-- model_name: or-nvidia-nemotron-3-ultra-550b-a55b:free
+- model_name: or-google-gemma-4-26b-a4b-it:free
   litellm_params:
-    model: openrouter/nvidia/nemotron-3-ultra-550b-a55b:free
+    model: openrouter/google/gemma-4-26b-a4b-it:free
+    api_key: os.environ/ARVIN_OPENROUTER_API_KEY
+  model_info:
+    discoverable: true
+- model_name: or-google-gemma-4-31b-it:free
+  litellm_params:
+    model: openrouter/google/gemma-4-31b-it:free
     api_key: os.environ/ARVIN_OPENROUTER_API_KEY
   model_info:
     discoverable: true
@@ -71,15 +53,39 @@ model_list:
     api_key: os.environ/ARVIN_OPENROUTER_API_KEY
   model_info:
     discoverable: true
+- model_name: or-nvidia-nemotron-3-ultra-550b-a55b:free
+  litellm_params:
+    model: openrouter/nvidia/nemotron-3-ultra-550b-a55b:free
+    api_key: os.environ/ARVIN_OPENROUTER_API_KEY
+  model_info:
+    discoverable: true
+- model_name: or-thinkingmachines-inkling-2-small:free
+  litellm_params:
+    model: openrouter/thinkingmachines/inkling-2-small:free
+    api_key: os.environ/ARVIN_OPENROUTER_API_KEY
+  model_info:
+    discoverable: true
+- model_name: or-dots-studio-dots-3-note-preview:free
+  litellm_params:
+    model: openrouter/dots-studio/dots-3-note-preview:free
+    api_key: os.environ/ARVIN_OPENROUTER_API_KEY
+  model_info:
+    discoverable: true
+- model_name: or-inclusionai-ling-3.2-flash:free
+  litellm_params:
+    model: openrouter/inclusionai/ling-3.2-flash:free
+    api_key: os.environ/ARVIN_OPENROUTER_API_KEY
+  model_info:
+    discoverable: true
 - model_name: or-google-lyria-3-clip-preview
   litellm_params:
     model: openrouter/google/lyria-3-clip-preview
     api_key: os.environ/ARVIN_OPENROUTER_API_KEY
   model_info:
     discoverable: true
-- model_name: or-stealth-crouton-alpha
+- model_name: or-baidu-ernie-5.5-flash-preview:free
   litellm_params:
-    model: openrouter/stealth/crouton-alpha
+    model: openrouter/baidu/ernie-5.5-flash-preview:free
     api_key: os.environ/ARVIN_OPENROUTER_API_KEY
   model_info:
     discoverable: true
@@ -140,6 +146,12 @@ model_list:
     reasoning_effort: low
   model_info:
     discoverable: false
+- model_name: groq-allam-2-7b-fast
+  litellm_params:
+    model: groq/allam-2-7b
+    api_key: os.environ/ARVIN_GROQ_API_KEY
+  model_info:
+    discoverable: false
 - model_name: groq-openai-gpt-oss-120b-balanced
   litellm_params:
     model: groq/openai/gpt-oss-120b
@@ -159,6 +171,12 @@ model_list:
     model: groq/openai/gpt-oss-20b
     api_key: os.environ/ARVIN_GROQ_API_KEY
     reasoning_effort: medium
+  model_info:
+    discoverable: false
+- model_name: groq-allam-2-7b-balanced
+  litellm_params:
+    model: groq/allam-2-7b
+    api_key: os.environ/ARVIN_GROQ_API_KEY
   model_info:
     discoverable: false
 - model_name: groq-openai-gpt-oss-120b-reasoning
@@ -182,30 +200,33 @@ model_list:
     reasoning_effort: high
   model_info:
     discoverable: false
-- model_name: gemini-2.5-flash
+- model_name: groq-allam-2-7b-reasoning
   litellm_params:
-    model: gemini/gemini-2.5-flash
+    model: groq/allam-2-7b
+    api_key: os.environ/ARVIN_GROQ_API_KEY
+  model_info:
+    discoverable: false
+- model_name: gemini-3.8-flash
+  litellm_params:
+    model: gemini/gemini-3.8-flash
     api_key: os.environ/GEMINI_API_KEY
   model_info:
     discoverable: true
 - model_name: AUTO-Fast
   litellm_params:
-    model: groq/openai/gpt-oss-20b
-    api_key: os.environ/ARVIN_GROQ_API_KEY
-    reasoning_effort: low
+    model: openrouter/nvidia/nemotron-3.5-lightning:free
+    api_key: os.environ/ARVIN_OPENROUTER_API_KEY
   model_info:
     discoverable: true
 - model_name: AUTO-Balanced
   litellm_params:
-    model: groq/openai/gpt-oss-120b
-    api_key: os.environ/ARVIN_GROQ_API_KEY
-    reasoning_effort: medium
+    model: openrouter/cohere/north-mini-code:free
+    api_key: os.environ/ARVIN_OPENROUTER_API_KEY
   model_info:
     discoverable: true
 - model_name: AUTO-Reasoning
   litellm_params:
-    model: groq/openai/gpt-oss-120b
-    api_key: os.environ/ARVIN_GROQ_API_KEY
-    reasoning_effort: high
+    model: openrouter/thinkingmachines/inkling-2-small:free
+    api_key: os.environ/ARVIN_OPENROUTER_API_KEY
   model_info:
     discoverable: true

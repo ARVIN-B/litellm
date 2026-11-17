@@ -1,65 +1,65 @@
 router_settings:
   fallbacks:
   - AUTO-Fast:
+    - groq-openai-gpt-oss-20b-fast
+    - or-nvidia-nemotron-3-nano-omni-30b-a3b-reasoning:free
     - groq-qwen-qwen3.8-27b-fast
+    - or-cohere-north-mini-code:free
     - groq-openai-gpt-oss-120b-fast
     - or-liquid-lfm-3-1.7b:free
-    - or-liquid-lfm-2.5-2.6b:free
-    - or-cohere-north-mini-code:free
-    - or-nvidia-nemotron-3.5-lightning:free
-    - or-nvidia-nemotron-3-nano-omni-30b-a3b-reasoning:free
-    - or-google-gemma-4-26b-a4b-it:free
-    - or-dots-studio-dots-3-note-preview:free
-    - or-google-gemma-4-31b-it:free
+    - groq-allam-2-7b-fast
     - or-recursive-flint-v1.0:free
-    - or-xingchen-agi-xing4.0-29b-a4b:free
-    - or-nvidia-nemotron-3-ultra-550b-a55b:free
+    - or-particle-ai-particle-1:free
+    - or-google-gemma-4-26b-a4b-it:free
+    - or-google-gemma-4-31b-it:free
     - or-nvidia-nemotron-3.5-super-vl:free
+    - or-nvidia-nemotron-3-ultra-550b-a55b:free
+    - or-thinkingmachines-inkling-2-small:free
+    - or-dots-studio-dots-3-note-preview:free
+    - or-inclusionai-ling-3.2-flash:free
     - or-google-lyria-3-clip-preview
-    - or-stealth-crouton-alpha
+    - or-baidu-ernie-5.5-flash-preview:free
     - or-google-lyria-3-pro-preview
     - or-openrouter-free
-    - gemini-2.5-flash
   - AUTO-Balanced:
+    - groq-openai-gpt-oss-120b-balanced
+    - or-nvidia-nemotron-3.5-lightning:free
     - groq-qwen-qwen3.8-27b-balanced
+    - or-thinkingmachines-inkling-2-small:free
     - groq-openai-gpt-oss-20b-balanced
-    - or-cohere-north-mini-code:free
     - or-nvidia-nemotron-3.5-super-vl:free
-    - or-nvidia-nemotron-3.5-lightning:free
-    - or-liquid-lfm-2.5-2.6b:free
-    - or-liquid-lfm-3-1.7b:free
+    - groq-allam-2-7b-balanced
     - or-nvidia-nemotron-3-ultra-550b-a55b:free
+    - or-baidu-ernie-5.5-flash-preview:free
+    - or-liquid-lfm-3-1.7b:free
     - or-google-gemma-4-31b-it:free
-    - or-dots-studio-dots-3-note-preview:free
     - or-nvidia-nemotron-3-nano-omni-30b-a3b-reasoning:free
+    - or-particle-ai-particle-1:free
+    - or-dots-studio-dots-3-note-preview:free
     - or-google-gemma-4-26b-a4b-it:free
     - or-google-lyria-3-pro-preview
+    - or-inclusionai-ling-3.2-flash:free
     - or-google-lyria-3-clip-preview
     - or-recursive-flint-v1.0:free
-    - or-xingchen-agi-xing4.0-29b-a4b:free
     - or-openrouter-free
-    - or-stealth-crouton-alpha
-    - gemini-2.5-flash
   - AUTO-Reasoning:
-    - groq-qwen-qwen3.8-27b-reasoning
-    - groq-openai-gpt-oss-20b-reasoning
+    - groq-openai-gpt-oss-120b-reasoning
     - or-nvidia-nemotron-3.5-super-vl:free
+    - groq-qwen-qwen3.8-27b-reasoning
     - or-nvidia-nemotron-3-ultra-550b-a55b:free
+    - groq-openai-gpt-oss-20b-reasoning
     - or-nvidia-nemotron-3.5-lightning:free
+    - groq-allam-2-7b-reasoning
     - or-google-gemma-4-31b-it:free
     - or-cohere-north-mini-code:free
+    - or-baidu-ernie-5.5-flash-preview:free
     - or-dots-studio-dots-3-note-preview:free
     - or-google-gemma-4-26b-a4b-it:free
-    - or-liquid-lfm-2.5-2.6b:free
+    - or-inclusionai-ling-3.2-flash:free
     - or-liquid-lfm-3-1.7b:free
     - or-nvidia-nemotron-3-nano-omni-30b-a3b-reasoning:free
+    - or-particle-ai-particle-1:free
     - or-recursive-flint-v1.0:free
-    - or-stealth-crouton-alpha
-    - or-xingchen-agi-xing4.0-29b-a4b:free
-    - or-google-lyria-3-clip-preview
-    - or-google-lyria-3-pro-preview
-    - or-openrouter-free
-    - gemini-2.5-flash
   num_retries: 1
   allowed_fails: 1
   cooldown_time: 60

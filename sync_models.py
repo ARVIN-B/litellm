@@ -20,8 +20,14 @@ load_dotenv(BASE_DIR / ".env")
 # Groq's models-list API does not currently expose a reliable modality field.
 # Exclude known non-chat families; unknown future IDs are considered candidates.
 GROQ_NON_CHAT_PATTERNS = (
-    "whisper", "orpheus", "prompt-guard", "guard-", "speech",
-    "transcription", "embedding", "tts",
+    "whisper",
+    "orpheus",
+    "prompt-guard",
+    "guard-",
+    "speech",
+    "transcription",
+    "embedding",
+    "tts",
 )
 
 GROQ_REASONING_MODELS = {
@@ -33,9 +39,9 @@ GROQ_REASONING_MODELS = {
 }
 
 GEMINI_MODEL = {
-    "model_name": "gemini-2.5-flash",
+    "model_name": "gemini-3.8-flash",
     "litellm_params": {
-        "model": "gemini/gemini-2.5-flash",
+        "model": "gemini/gemini-3.8-flash",
         "api_key": "os.environ/GEMINI_API_KEY",
     },
     "model_info": {"discoverable": True},
@@ -79,7 +85,8 @@ def is_free_text_chat(model):
 
 def alias_for(provider, model_id):
     return re.sub(
-        r"[^A-Za-z0-9_.:-]+", "-",
+        r"[^A-Za-z0-9_.:-]+",
+        "-",
         provider + "-" + model_id.replace("/", "-"),
     ).strip("-")
 
@@ -125,9 +132,7 @@ def make_groq_entry(model, category=None, reasoning_effort=None):
         "model_name": model_name,
         "litellm_params": params,
         # "model_info": {"discoverable": True},
-        "model_info": {
-            "discoverable": not bool(category)
-        },
+        "model_info": {"discoverable": not bool(category)},
     }
 
 
@@ -139,6 +144,7 @@ def dedupe(entries):
             result.append(entry)
             seen.add(provider_model)
     return result
+
 
 def order_by_ids(models, ordered_ids):
     by_id = {m["id"]: m for m in models}
@@ -184,7 +190,12 @@ def main():
     )
 
     all_or = {}
-    for batch in (or_latency_raw, or_throughput_raw, or_intelligence_raw, or_reasoning_raw):
+    for batch in (
+        or_latency_raw,
+        or_throughput_raw,
+        or_intelligence_raw,
+        or_reasoning_raw,
+    ):
         for model in batch:
             if model.get("id") and is_free_text_chat(model):
                 all_or[model["id"]] = model
@@ -208,6 +219,7 @@ def main():
     # data naturally places a model later without inventing a numeric score.
     intelligence_rank = {model_id: i for i, model_id in enumerate(intelligence_ids)}
     throughput_rank = {model_id: i for i, model_id in enumerate(throughput_ids)}
+
     def balanced_score(model):
         model_id = model["id"]
         intelligence_position = intelligence_rank.get(model_id, len(intelligence_ids))
@@ -218,12 +230,14 @@ def main():
 
     or_balanced = sorted(or_models, key=balanced_score)
     or_reasoning_models = [m for m in or_models if m["id"] in set(reasoning_ids)]
-    or_reasoning = order_by_ids(or_reasoning_models, reasoning_ids) if or_reasoning_models else or_intelligence
+    or_reasoning = (
+        order_by_ids(or_reasoning_models, reasoning_ids)
+        if or_reasoning_models
+        else or_intelligence
+    )
 
     print("Fetching Groq active models...")
-    groq_raw = get_json(
-        GROQ_URL, headers={"Authorization": f"Bearer {groq_key}"}
-    )
+    groq_raw = get_json(GROQ_URL, headers={"Authorization": f"Bearer {groq_key}"})
     groq_models = []
     for model in groq_raw:
         model_id = model.get("id", "")
@@ -247,51 +261,72 @@ def main():
     or_reasoning_entries = [make_openrouter_entry(m) for m in or_reasoning]
     groq_entries = [make_groq_entry(m) for m in groq_models]
 
-    groq_reasoning_models = [
-        m for m in groq_models
-        if m["id"] in GROQ_REASONING_MODELS
-    ]
+    groq_reasoning_models = [m for m in groq_models if m["id"] in GROQ_REASONING_MODELS]
 
     def groq_model_size(model):
         match = re.search(r"(\d+(?:\.\d+)?)b", model["id"].lower())
         return float(match.group(1)) if match else 0
 
-    # Fast: کوچک‌ترین مدل اول
-    groq_fast_models = sorted(
-        groq_reasoning_models,
-        key=groq_model_size
-    )
+    groq_reasoning_ids = {m["id"] for m in groq_reasoning_models}
 
-    # Balanced و Reasoning: بزرگ‌ترین مدل اول
-    groq_large_first_models = sorted(
-        groq_reasoning_models,
-        key=groq_model_size,
-        reverse=True
-    )
-
-    groq_fast_entries = [
-        make_groq_entry(m, "fast", "low")
-        for m in groq_fast_models
+    # Fast: ابتدا مدل‌های reasoning کوچک‌تر، سپس سایر مدل‌ها
+    groq_fast_models = sorted(groq_reasoning_models, key=groq_model_size) + [
+        m for m in groq_models if m["id"] not in groq_reasoning_ids
     ]
 
+    # Balanced / Reasoning: ابتدا مدل‌های reasoning بزرگ‌تر،
+    # سپس سایر مدل‌های فعال Groq
+    groq_large_first_models = sorted(
+        groq_reasoning_models, key=groq_model_size, reverse=True
+    ) + [m for m in groq_models if m["id"] not in groq_reasoning_ids]
+
+    groq_fast_entries = [make_groq_entry(m, "fast", "low") for m in groq_fast_models]
+
     groq_balanced_entries = [
-        make_groq_entry(m, "balanced", "medium")
-        for m in groq_large_first_models
+        make_groq_entry(m, "balanced", "medium") for m in groq_large_first_models
     ]
 
     groq_reasoning_entries = [
-        make_groq_entry(m, "reasoning", "high")
-        for m in groq_large_first_models
+        make_groq_entry(m, "reasoning", "high") for m in groq_large_first_models
     ]
 
     gemini_entries = [GEMINI_MODEL]
 
+    def alternate_providers(openrouter_entries, groq_entries):
+        result = []
+
+        max_len = max(len(openrouter_entries), len(groq_entries))
+
+        for i in range(max_len):
+            if i < len(openrouter_entries):
+                result.append(openrouter_entries[i])
+
+            if i < len(groq_entries):
+                result.append(groq_entries[i])
+
+        return dedupe(result)
+
     # AUTO aliases remain stable; their primary deployment and fallback chain
     # are rebuilt from current provider metadata on every script run.
+    # category_candidates = {
+    #     "AUTO-Fast": dedupe(groq_fast_entries + or_latency_entries + gemini_entries),
+    #     "AUTO-Balanced": dedupe(groq_balanced_entries + or_balanced_entries + gemini_entries),
+    #     "AUTO-Reasoning": dedupe(groq_reasoning_entries + or_reasoning_entries + or_intelligence_entries + gemini_entries),
+    # }
+
+    # AUTO aliases:
+    # First/default: OpenRouter
+    # Second: Groq
+    # Remaining: alternate OpenRouter and Groq
+
     category_candidates = {
-        "AUTO-Fast": dedupe(groq_fast_entries + or_latency_entries + gemini_entries),
-        "AUTO-Balanced": dedupe(groq_balanced_entries + or_balanced_entries + gemini_entries),
-        "AUTO-Reasoning": dedupe(groq_reasoning_entries + or_reasoning_entries + or_intelligence_entries + gemini_entries),
+        "AUTO-Fast": alternate_providers(or_latency_entries, groq_fast_entries),
+        "AUTO-Balanced": alternate_providers(
+            or_balanced_entries, groq_balanced_entries
+        ),
+        "AUTO-Reasoning": alternate_providers(
+            or_reasoning_entries, groq_reasoning_entries
+        ),
     }
 
     raw_entries = (
@@ -305,27 +340,30 @@ def main():
 
     aliases = [e["model_name"] for e in raw_entries]
     if len(aliases) != len(set(aliases)):
-        raise RuntimeError("Generated aliases collided; refusing to replace existing configuration.")
+        raise RuntimeError(
+            "Generated aliases collided; refusing to replace existing configuration."
+        )
 
     auto_entries = []
     for category, candidates in category_candidates.items():
         if not candidates:
-            raise RuntimeError(f"No candidates for {category}; existing files were kept.")
-        auto_entries.append({
-            "model_name": category,
-            "litellm_params": dict(candidates[0]["litellm_params"]),
-            "model_info": {"discoverable": True},
-        })
+            raise RuntimeError(
+                f"No candidates for {category}; existing files were kept."
+            )
+        auto_entries.append(
+            {
+                "model_name": category,
+                "litellm_params": dict(candidates[0]["litellm_params"]),
+                "model_info": {"discoverable": True},
+            }
+        )
 
     generated_models = raw_entries + auto_entries
 
     fallbacks = []
 
     for category, candidates in category_candidates.items():
-        names = [
-            candidate["model_name"]
-            for candidate in candidates[1:]
-        ]
+        names = [candidate["model_name"] for candidate in candidates[1:]]
 
         if not names:
             print(f"WARNING: {category} has no fallback candidate.")
@@ -336,12 +374,14 @@ def main():
         {"model_list": generated_models}, sort_keys=False, allow_unicode=True
     )
     router_yaml = yaml.safe_dump(
-        {"router_settings": {
-            "fallbacks": fallbacks,
-            "num_retries": 1,
-            "allowed_fails": 1,
-            "cooldown_time": 60,
-        }},
+        {
+            "router_settings": {
+                "fallbacks": fallbacks,
+                "num_retries": 1,
+                "allowed_fails": 1,
+                "cooldown_time": 60,
+            }
+        },
         sort_keys=False,
         allow_unicode=True,
     )
@@ -360,15 +400,26 @@ def main():
     print("=" * 52)
     print(f"OpenRouter free chat models: {len(or_models)}")
     print(f"Groq active chat candidates: {len(groq_models)}")
-    print(f"Gemini models: 1 (currently fixed to gemini-2.5-flash)")
+    print(f"Gemini models: 1 (currently fixed to gemini-3.8-flash)")
     print(f"Raw models: {len(raw_entries)}")
     print(f"AUTO groups: {len(auto_entries)}")
     print("=" * 52)
 
     if models_changed or router_changed:
-        print("Generated configuration changed; recreating LiteLLM to apply config and mounts...")
+        print(
+            "Generated configuration changed; recreating LiteLLM to apply config and mounts..."
+        )
         subprocess.run(
-            ["docker", "compose", "-f", str(COMPOSE_FILE), "up", "-d", "--force-recreate", "litellm"],
+            [
+                "docker",
+                "compose",
+                "-f",
+                str(COMPOSE_FILE),
+                "up",
+                "-d",
+                "--force-recreate",
+                "litellm",
+            ],
             cwd=BASE_DIR,
             check=True,
         )
